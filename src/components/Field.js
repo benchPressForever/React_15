@@ -33,40 +33,42 @@ export function Field({size}){
         dispatch(FieldMoveAction(Arr));
     }
 
-    function AddRating(){
-            axios.delete("https://6488dbfb0e2469c038fe741d.mockapi.io/Rating/1");
 
-            let Rating = [];
-            if(size == 3) Rating = R3;
-            else if(size == 4) Rating = R4;
-            else if(size == 5) Rating = R5;
-            else if(size == 6) Rating = R6;
-            Rating[3] = {name:Name,field:size,time:Time,steps:Steps};
+    async function AddRating(){
+            R3?.length+R4?.length+R5?.length+R6?.length > 0 && await axios.delete("https://6488dbfb0e2469c038fe741d.mockapi.io/Rating/1");
+
+            let Rating;
+            if(size == 3 ) Rating = R3;
+            else if(size == 4 ) Rating = R4;
+            else if(size == 5 ) Rating = R5;
+            else if(size == 6 ) Rating = R6;
+            Rating.push({name:Name,field:size,time:Time,steps:Steps});
+            console.log(Rating)
             for(let i = 0;i < Rating.length;i++){
                 for(let j = 0;j < Rating.length;j++){
+                        let a = Rating[i];
                         if(Rating[i].steps < Rating[j].steps){
-                            let a = Rating[i];
-                            Rating[i] = Rating[j];
-                            Rating[j] = a;
-                        }
+                                Rating[i] = Rating[j];
+                                Rating[j] = a;
+                        }       
                 }
             }
-            if(size == 3) {dispatch(AddR3Action([Rating[0],Rating[1],Rating[2]]))}
-            else if(size == 4) {dispatch(AddR4Action([Rating[0],Rating[1],Rating[2]]))}
-            else if(size == 5) {dispatch(AddR5Action([Rating[0],Rating[1],Rating[2]]))}
-            else if(size == 6) {dispatch(AddR6Action([Rating[0],Rating[1],Rating[2]]))}   
-            dispatch(LastGamesAction({field:size,time:Time,steps:Steps}))    
+            if(size == 3) {dispatch(AddR3Action(Rating))}
+            else if(size == 4) {dispatch(AddR4Action(Rating))}
+            else if(size == 5) {dispatch(AddR5Action(Rating))}
+            else if(size == 6) {dispatch(AddR6Action(Rating))}   
+            dispatch(LastGamesAction({field:size,time:Time,steps:Steps}))
+
+            axios.post("https://6488dbfb0e2469c038fe741d.mockapi.io/Rating",{r3:R3,r4:R4,r5:R5,r6:R6});
     }
 
 
 
-    function winner(){
+    async function  winner(){
         if(FieldArr.toString() == win.toString()){
             AddRating();
             dispatch(RemoveAction())
             dispatch(ChangeStartGameAction(false));
-            console.log(R3,R4,R5,R6)
-            axios.post("https://6488dbfb0e2469c038fe741d.mockapi.io/Rating",{r3:R3,r4:R4,r5:R5,r6:R6});
             alert("Win!!!");
         }
     }

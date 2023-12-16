@@ -18,10 +18,10 @@ export const RatingReducer = (state = defaultState,action) => {
     switch(action.type){
         case GET_RATING:
             return {...state,
-                R3:action.payload[0].r3,
-                R4:action.payload[0].r4,
-                R5:action.payload[0].r5,
-                R6:action.payload[0].r6
+                R3:action.payload[0]?.r3,
+                R4:action.payload[0]?.r4,
+                R5:action.payload[0]?.r5,
+                R6:action.payload[0]?.r6
             };
         case ADD_R3:
             return {...state,R3:action.payload}

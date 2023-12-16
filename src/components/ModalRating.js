@@ -16,24 +16,14 @@ function ModalRating({arr,Field}){
                 <td>Время</td>
                 <td>кол-во ходов</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>{arr[0].name}</td>
-                <td>{arr[0].time}</td>
-                <td>{arr[0].steps}</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>{arr[1].name}</td>
-                <td>{arr[1].time}</td>
-                <td>{arr[1].steps}</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>{arr[2].name}</td>
-                <td>{arr[2].time}</td>
-                <td>{arr[2].steps}</td>
-            </tr>
+            {arr.map((obj,i) => 
+                <tr>
+                    <td>{i+1}</td>
+                    <td>{obj.name}</td>
+                    <td>{obj.time}</td>
+                    <td>{obj.steps}</td>
+                </tr>
+            )}
         </table>
 
         <Link to = "/">

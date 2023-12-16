@@ -13,6 +13,7 @@ import { Profile } from "./components/Profile";
 import { ChangeRatinOpengAction } from "./store/RatingR";
 import ModalRating from "./components/ModalRating";
 import History from "./components/History";
+import axios from "axios";
 
 
 
