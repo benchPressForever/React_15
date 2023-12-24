@@ -387,4 +387,5 @@ hr{
   height: 50px;
   border: 1px solid #dddddd;
   text-align: center;
+  overflow: auto;
 }
