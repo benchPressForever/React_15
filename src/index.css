@@ -369,6 +369,7 @@ hr{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow:auto;
 }
 
 #R{
@@ -377,6 +378,7 @@ hr{
   font-size: 30px;
   border-spacing: 0px;
   border-collapse: collapse;
+  overflow-y: scroll;
 }
 
 

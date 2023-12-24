@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 function ModalRating({arr,Field}){
     const dispatch = useDispatch();
     return(
-    <div className="overlay">
+    <div className="overlay" style={{overflowY:"scroll"}}>
         <div className="modalRating">
         <h2>Рейтинг</h2>
         <h3>{Field}</h3>
