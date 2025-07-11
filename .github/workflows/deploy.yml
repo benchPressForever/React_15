@@ -1,0 +1,25 @@
+name: Deploy Docker App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519_selectel-deploy
+          chmod 600 ~/.ssh/id_ed25519_selectel-deploy
+          ssh-keyscan ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} "docker stop my-app || true && docker rm my-app || true && cd github/deploy-mk-docker && git pull && docker build -t my-app . && docker run -d --name my-app -p 3000:3000 my-app"
